@@ -11,7 +11,7 @@ app.use(express.json());
 
 db();
 
-app.use("/api", router);
+app.use("/api/pays/", router);
 
 app.use((req, res, next) => {
     console.log(

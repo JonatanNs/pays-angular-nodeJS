@@ -1,58 +1,133 @@
 import paysService from "./pays.service.js";
-
+import {apiResponse} from "../dto/apiResponse.js";
 
 export const getAllPays = async (req, res) => {
     try {
         const pays = await paysService.findAllPays();
-        res.json(pays);
+
+        return res
+                .status(200)
+                .json(apiResponse(200, "Pays récupérés", pays));
+
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        return res
+                .status(500)
+                .json(apiResponse(500, "Une erreur est survenu.", null));
     }
 };
 
 const getPays = async (req, res) => {
     try {
-        const pays = await paysService.findByCode(req.params.code);
-
+        const pays = await paysService.findById(req.params.uuid);
         if (pays) {
-            res.json(pays.name);
+           return  res
+                   .status(200)
+                   .json(apiResponse(200, "Pays récupéré", pays));
         } else {
-            res.status(404).send("Pays non trouvée");
+           return res
+            .status(404)
+            .json(apiResponse(404, "Pays non trouvé", null));
         }
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        return res
+            .status(500)
+            .json(apiResponse(500, "Une erreur est survenu.", null));
     }
 };
 
 const createPays = async (req, res) =>{
     try{
-        const newPays = await paysService.savePays(req.params.pays);
+
+        if(await paysService.findByCode(req.body.code)){
+            return res
+                .status(409)
+                .json(apiResponse(409,  "Le pays existe déjà !", null ));
+        }
+
+        if(await paysService.findByName(req.body.name)){
+            return res
+                .status(409)
+                .json(apiResponse(409,  "Le pays existe déjà !", null ));
+        }
+
+        const newPays = await paysService.savePays({
+            name: req.body.name,
+            code: req.body.code,
+            uuid: crypto.randomUUID()
+        });
+
         if(newPays){
-            res.json(newPays);
+            return  res
+                .status(200)
+                .json(apiResponse(200, "Création du Pays éffectuer avec succes.", newPays));
         } else {
             res.status(400).send("Une erreur est survenu");
+            return res
+                .status(400)
+                .json(apiResponse(400, "Une erreur est survenu.", null));
         }
     } catch (err) {
-        res.status(500).json({ error: err.message });
+        return res
+            .status(500)
+            .json(apiResponse(500, "Une erreur est survenu.", null));
     }
-
 }
+
 const deletePays = async (req, res) =>{
     try{
-        const responseDelete = await paysService.deletePays(req.params.uuid);
-        res.json(responseDelete);
+        const result = await paysService.deletePays(req.params.uuid);
+
+        if (result.deletedCount === 0) {
+            return res
+                .status(404)
+                .json(apiResponse(404, "Le pays n'existe pas !", null));
+        }
+
+        return res
+            .status(200)
+            .json(apiResponse(200, "Suppréssion effectué avec succes.", null));
+
     } catch (err){
-        res.status(500).json({ error: err.message });
+        return res
+            .status(500)
+            .json(apiResponse(500, "Une erreur est survenu.", null));
     }
 }
-const updatePays = async (req, res ) =>{
-    try{
-        const updatePays = await paysService.updatePays(req.params.pays);
-        res.json(updatePays);
-    } catch (err){
-        res.status(500).json({ error: err.message });
+
+const updatePays = async (req, res) => {
+    try {
+        const { uuid, name, code } = req.body;
+
+        if (!await paysService.findById(uuid)) {
+            return res
+                .status(404)
+                .json(apiResponse(404, "Le pays n'existe pas !", null));
+        }
+
+        if (await paysService.findByCode(code)) {
+            return res
+                .status(409)
+                .json(apiResponse(409, "Le code existe déjà !", null));
+        }
+
+        if (await paysService.findByName(name)) {
+            return res
+                .status(409)
+                .json(apiResponse(409, "Le nom existe déjà !", null));
+        }
+
+        const updatedPays = await paysService.updatePays(uuid, {name, code});
+
+        return res
+            .status(200)
+            .json(apiResponse(200, "Mise à jour effectuée avec succès", updatedPays));
+
+    } catch (err) {
+        return res
+            .status(500)
+            .json(apiResponse(500, "Une erreur est survenue", null));
     }
-}
+};
 
 export default {
     getPays,

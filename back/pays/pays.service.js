@@ -4,8 +4,16 @@ const findAllPays = async () => {
     return Pays.find();
 };
 
+const findById = async (uuid) => {
+    return Pays.findOne({ uuid });
+};
+
 const findByCode = async (code) => {
     return Pays.findOne({ code });
+};
+
+const findByName = async (name) => {
+    return Pays.findOne({ name });
 };
 
 const savePays = async (pays) => {
@@ -26,8 +34,10 @@ const updatePays = async (uuid, pays) => {
 
 export default {
     findAllPays,
-    findByCode,
+    findById,
     savePays,
     deletePays,
-    updatePays
+    updatePays,
+    findByCode,
+    findByName
 };
