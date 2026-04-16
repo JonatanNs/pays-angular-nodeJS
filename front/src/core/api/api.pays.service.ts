@@ -16,7 +16,19 @@ export class ApiPaysService {
     return this.http.get<IApiResponse<IPays[]>>(`${this.baseUrl}/api/pays`);
   }
 
-  getPays(uuid : string): Observable<IApiResponse<IPays>> {
+  getPays(uuid: string): Observable<IApiResponse<IPays>> {
     return this.http.get<IApiResponse<IPays>>(`${this.baseUrl}/api/pays/${uuid}`);
+  }
+
+  createPays(pays: IPays): Observable<IApiResponse<IPays>> {
+    return this.http.post<IApiResponse<IPays>>(`${this.baseUrl}/api/pays/ajouter`, pays);
+  }
+
+  updatePays(pays: IPays): Observable<IApiResponse<IPays>> {
+    return this.http.post<IApiResponse<IPays>>(`${this.baseUrl}/api/pays/modifier`, pays);
+  }
+
+  deletePays(uuid: string): Observable<IApiResponse<IPays>> {
+    return this.http.get<IApiResponse<IPays>>(`${this.baseUrl}/api/pays/supprimer/${uuid}`);
   }
 }
