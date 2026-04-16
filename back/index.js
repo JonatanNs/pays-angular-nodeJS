@@ -1,6 +1,7 @@
-import express from "express";
+import express, {json} from "express";
 import db from "./config/db.js";
 import router from "./pays/pays.routes.js";
+import {apiResponse} from "./dto/apiResponse.js";
 
 const app = express();
 const port = 3000;
@@ -23,7 +24,9 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res) => {
-    res.status(404).send("Page non trouvée");
+    res
+        .status(404)
+        .json(apiResponse(404,"Page non trouvée", null ));
 });
 
 app.listen(port, () => {
