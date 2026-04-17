@@ -1,5 +1,6 @@
 import paysService from "./pays.service.js";
 import {apiResponse} from "../dto/apiResponse.js";
+import {validationResult} from "express-validator";
 
 export const getAllPays = async (req, res) => {
     try {
@@ -37,6 +38,14 @@ const getPays = async (req, res) => {
 
 const createPays = async (req, res) =>{
     try{
+
+        const errors = validationResult(req);
+
+        if( !errors.isEmpty() ){
+            return res
+                .status(400)
+                .json( apiResponse(400, "Validation error", errors.array()) )
+        }
 
         if(await paysService.findByCode(req.body.code)){
             return res
@@ -97,6 +106,14 @@ const deletePays = async (req, res) =>{
 const updatePays = async (req, res) => {
     try {
         const { uuid, name, code } = req.body;
+
+        const errors = validationResult(req);
+
+        if( !errors.isEmpty() ){
+            return res
+                .status(400)
+                .json( apiResponse(400, "Validation error", errors.array()) )
+        }
 
         if (!await paysService.findById(uuid)) {
             return res
