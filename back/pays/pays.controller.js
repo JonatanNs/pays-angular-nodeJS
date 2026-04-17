@@ -107,13 +107,13 @@ const updatePays = async (req, res) => {
         if (await paysService.findByCode(code)) {
             return res
                 .status(409)
-                .json(apiResponse(409, "Le code existe déjà !", null));
+                .json(apiResponse(409, "Ce code pays existe déjà !", null));
         }
 
         if (await paysService.findByName(name)) {
             return res
                 .status(409)
-                .json(apiResponse(409, "Le nom existe déjà !", null));
+                .json(apiResponse(409, "Ce pays existe déjà !", null));
         }
 
         const updatedPays = await paysService.updatePays(uuid, {name, code});
