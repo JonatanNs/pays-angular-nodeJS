@@ -1,5 +1,43 @@
-<article>
-  <h1>{{ onePays()?.name }}</h1>
-  <p>{{ onePays()?.code }}</p>
-</article>
+<article class="min-h-screen flex items-center justify-center bg-base-100 p-6">
 
+  <div class="card w-full max-w-md bg-base-200 shadow-xl border border-primary/20">
+
+    <div class="card-body items-center text-center space-y-4">
+
+      <!-- Avatar / visuel -->
+      <div class="avatar">
+        <div class="w-20 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
+          <img src="https://img.daisyui.com/images/profile/demo/1@94.webp" />
+        </div>
+      </div>
+
+      <!-- Nom -->
+      <h1 class="text-3xl font-bold">
+        {{ response()?.name }}
+      </h1>
+
+      <!-- Code -->
+      <p class="text-sm uppercase tracking-widest opacity-60">
+        {{ response()?.code }}
+      </p>
+
+      <!-- Actions -->
+      <div class="card-actions flex flex-col w-full mt-4 gap-2">
+
+        <a routerLink="modifier-pays" class="btn btn-outline btn-secondary w-full">
+          Modifier
+        </a>
+
+
+        <form (ngSubmit)="submitDelete(response()?.uuid)" class="w-full">
+          <button type="submit" class="btn btn-outline btn-error w-full">Supprimer</button>
+        </form>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+</article>

@@ -24,11 +24,15 @@ export class ApiPaysService {
     return this.http.post<IApiResponse<IPays>>(`${this.baseUrl}/api/pays/ajouter`, pays);
   }
 
-  updatePays(pays: IPays): Observable<IApiResponse<IPays>> {
-    return this.http.post<IApiResponse<IPays>>(`${this.baseUrl}/api/pays/modifier`, pays);
+  updatePays(uuid: string, data: { name: string | null ; code: string| null }): Observable<IApiResponse<IPays>> {
+    return this.http.put<IApiResponse<IPays>>(`${this.baseUrl}/api/pays/modifier`, {
+      uuid,
+      name: data.name,
+      code: data.code,
+    });
   }
 
-  deletePays(uuid: string): Observable<IApiResponse<IPays>> {
-    return this.http.get<IApiResponse<IPays>>(`${this.baseUrl}/api/pays/supprimer/${uuid}`);
+  deletePays(uuid: string): Observable<IApiResponse<any>> {
+    return this.http.delete<IApiResponse<IPays>>(`${this.baseUrl}/api/pays/supprimer/${uuid}`);
   }
 }
