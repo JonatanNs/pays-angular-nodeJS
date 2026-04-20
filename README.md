@@ -1,6 +1,6 @@
 # 🌍 World Countries App
 
-Application web permettant de gérer les pays visités 🌎
+Application web permettant de gérer les pays visités 
 Tu peux ajouter, modifier, supprimer et consulter les pays que tu as visités.
 
 ---
@@ -64,7 +64,7 @@ middlewares/
 
 ---
 
-## 🔌 API Endpoints
+## API Endpoints
 
 ### 📍 Pays
 
@@ -78,7 +78,7 @@ middlewares/
 
 ---
 
-## 📦 Installation
+## Installation
 
 ### 1. Cloner le projet
 
@@ -125,7 +125,7 @@ export const environment = {
 
 ---
 
-## 🧪 Exemple de requête
+## Exemple de requête
 
 ```http
 POST http://localhost:3000/api/pays/ajouter
@@ -139,7 +139,7 @@ Content-Type: application/json
 
 ---
 
-## 🛡️ Validation
+## Validation
 
 ### Backend
 
@@ -149,7 +149,7 @@ Content-Type: application/json
 
 ---
 
-## 🎨 UI
+## UI
 
 * Design avec DaisyUI
 * Cartes pour afficher les pays
@@ -158,7 +158,7 @@ Content-Type: application/json
 
 ---
 
-## 📌 Bonnes pratiques utilisées
+##  Bonnes pratiques utilisées
 
 ✔ Architecture propre (Controller / Service)
 ✔ Validation centralisée
@@ -168,7 +168,7 @@ Content-Type: application/json
 
 ---
 
-## 🔥 Améliorations possibles
+## Améliorations possibles
 
 * Authentification utilisateur
 * Ajout de photos de voyage
@@ -178,9 +178,9 @@ Content-Type: application/json
 
 ---
 
-## 👨‍💻 Auteur
+## Auteur
 
-Projet réalisé par **JonatanNs** 💻
+Projet réalisé par **JonatanNs** 
 
 ---
 
