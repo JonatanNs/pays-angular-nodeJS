@@ -1,11 +1,9 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { ApiPaysService } from '../../../../core/api/api.pays.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiMessageService } from '../../../../core/api/api.message.service';
-import { NgClass } from '@angular/common';
 import { IPays } from '../../model/IPays';
-import { IApiResponse } from '../../../../core/models/IApiResponse';
 
 @Component({
   selector: 'app-card-pays',
@@ -18,8 +16,6 @@ class CardPays implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private apiMessageService = inject(ApiMessageService);
-  private formBuilder = inject(FormBuilder);
-  protected uiState = inject(ApiMessageService);
 
   response = signal<IPays | null>(null);
 

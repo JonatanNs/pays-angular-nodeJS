@@ -7,6 +7,16 @@ export const routes: Routes = [
     title: 'home',
   },
   {
+    path: 'auth/connexion',
+    loadComponent: () => import('../feature/auth/login/login').then((m) => m.Login),
+    title: 'connexion',
+  },
+  {
+    path: 'auth/inscription',
+    loadComponent: () => import('../feature/auth/register/register').then((m) => m.Register),
+    title: 'inscription',
+  },
+  {
     path: 'pays',
     children: [
       {
@@ -24,7 +34,9 @@ export const routes: Routes = [
       {
         path: ':uuid/modifier-pays',
         loadComponent: () =>
-          import('../feature/pays/page/update-pays-page/update-pays-page').then((m) => m.UpdatePaysPage),
+          import('../feature/pays/page/update-pays-page/update-pays-page').then(
+            (m) => m.UpdatePaysPage,
+          ),
         title: 'Modfier un pays',
       },
       {
