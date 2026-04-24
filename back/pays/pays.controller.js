@@ -2,7 +2,7 @@ import paysService from "./pays.service.js";
 import {apiResponse} from "../dto/apiResponse.js";
 import {validationResult} from "express-validator";
 
-export const getAllPays = async (req, res) => {
+const getAllPays = async (req, res) => {
     try {
         const pays = await paysService.findAllPays();
 

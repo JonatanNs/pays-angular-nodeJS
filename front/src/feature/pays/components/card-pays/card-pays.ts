@@ -1,5 +1,5 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { ApiPaysService } from '../../../../core/api/api.pays.service';
+import { ApiPaysService } from '../../../../core/api/pays/api-pays.service';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ApiMessageService } from '../../../../core/api/api.message.service';

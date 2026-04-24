@@ -4,11 +4,11 @@ import {body} from "express-validator";
 
 const router = express.Router();
 
-router.get("/", paysController.getAllPays);
+router.get("/pays", paysController.getAllPays);
 
-router.get("/:uuid", paysController.getPays);
+router.get("/pays/:uuid", paysController.getPays);
 
-router.post("/ajouter", paysController.createPays, [
+router.post("/pays/ajouter", paysController.createPays, [
     body("name")
         .trim()
         .notEmpty()
@@ -25,9 +25,9 @@ router.post("/ajouter", paysController.createPays, [
     ],
 );
 
-router.delete("/supprimer/:uuid", paysController.deletePays);
+router.delete("/pays/supprimer/:uuid", paysController.deletePays);
 
-router.put("/modifier", paysController.updatePays, [
+router.put("/pays/modifier", paysController.updatePays, [
         body("name")
             .trim()
             .notEmpty()

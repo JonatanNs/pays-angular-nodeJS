@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {
   AbstractControl,
@@ -10,6 +10,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { FormErrorService } from '../services/form-error-service';
+import { ApiAuthService } from '../../../core/api/auth/api-auth.service';
+import { ApiMessageService } from '../../../core/api/api.message.service';
+import { IUser } from '../../../core/models/IUser';
 
 @Component({
   selector: 'app-register',
@@ -20,6 +23,8 @@ import { FormErrorService } from '../services/form-error-service';
 export class Register {
   private formBuilder = inject(FormBuilder);
   private formErrorService = inject(FormErrorService);
+  private authService = inject(ApiAuthService);
+  private apiMessageService = inject(ApiMessageService);
 
   passwordMatchValidator: ValidatorFn = (group: AbstractControl): ValidationErrors | null => {
     const password = group.get('password')?.value;
@@ -30,16 +35,16 @@ export class Register {
 
   registerForm: FormGroup = this.formBuilder.group(
     {
-      username: ['', [Validators.required, Validators.minLength(3)]],
-      email: ['', [Validators.required, Validators.email]],
+      username: ['john123', [Validators.required, Validators.minLength(3)]],
+      email: ['john@gmail.com', [Validators.required, Validators.email]],
       password: [
-        '',
+        'John12345#',
         [
           Validators.required,
           Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^A-Za-z\\d]).{10,}$'),
         ],
       ],
-      confirmPassword: ['', Validators.required],
+      confirmPassword: ['John12345#', Validators.required],
     },
     {
       validators: this.passwordMatchValidator,
@@ -50,11 +55,19 @@ export class Register {
     return this.formErrorService.getError(this.registerForm, name);
   }
 
-  registerSubmit() {
-    if (this.registerForm.invalid) {
-      this.registerForm.markAllAsTouched();
-      return;
-    }
-  }
+  user = signal<IUser | null>(null);
 
+  registerSubmit() {
+    if (this.registerForm.invalid) return;
+
+    this.authService.showRegister(this.registerForm.value).subscribe({
+      next: (res) => {
+        this.user.set(res.data);
+        this.apiMessageService.showSuccess(res.message);
+      },
+      error: (err) => {
+        this.apiMessageService.showError(err.error.message);
+      },
+    });
+  }
 }
