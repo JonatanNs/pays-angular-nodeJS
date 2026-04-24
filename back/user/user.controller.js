@@ -8,7 +8,7 @@ const showLogin = async (req, res) =>{
 const showRegister = async (req, res) =>{
     try{
         const existByUsername = await UserService.getUserByUsername(req.body.username);
-        const existByEmail = await UserService.getUserByUsername(req.body.email);
+        const existByEmail = await UserService.getUserByEmail(req.body.email);
         const newUser = await UserService.saveUser({
             username : req.body.username,
             email : req.body.email,

@@ -60,7 +60,7 @@ export class Register {
   registerSubmit() {
     if (this.registerForm.invalid) return;
 
-    this.authService.showRegister(this.registerForm.value).subscribe({
+    this.authService.register(this.registerForm.value).subscribe({
       next: (res) => {
         this.user.set(res.data);
         this.apiMessageService.showSuccess(res.message);

@@ -32,7 +32,7 @@ export class Login {
   loginSubmit() {
     if (this.loginForm.invalid) return;
 
-    this.authService.showLogin(this.loginForm.value).subscribe({
+    this.authService.login(this.loginForm.value).subscribe({
       next: (res) => {
         this.user.set(res.data);
         this.apiMessageService.showSuccess(res.message);

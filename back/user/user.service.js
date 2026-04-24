@@ -14,7 +14,7 @@ const getUserByEmail = async (email) =>{
 }
 
 const getUserByUsername = async (username) =>{
-    return User.findOne({usrname});
+    return User.findOne({username});
 }
 
 const deleteUserById = async (id) =>{

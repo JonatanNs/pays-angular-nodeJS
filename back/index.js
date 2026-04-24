@@ -1,7 +1,11 @@
 import express, {json} from "express";
 import db from "./config/db.js";
-import router from "./pays/pays.routes.js";
 import {apiResponse} from "./dto/apiResponse.js";
+import {routerPays} from "./pays/pays.routes.js";
+import {routerAuth} from "./user/user.routes.js";
+
+
+
 
 const app = express();
 const port = 3000;
@@ -11,7 +15,8 @@ app.use(express.json());
 
 db();
 
-app.use("/api", router);
+app.use("/api/auth", routerAuth);
+app.use("/api/pays", routerPays);
 
 app.use((req, res, next) => {
     console.log(

@@ -2,23 +2,21 @@ import express from "express";
 import {body} from "express-validator";
 import UserController from "./user.controller.js";
 
-export const router = express.Router();
+export const routerAuth = express.Router();
 
-router.post('/auth/connexion', UserController.showLogin, [
-    body("email")
-        .isEmail(),
-    body("password")
-        .notEmpty()
-]);
+routerAuth.post('/connexion',
+    [
+        body("email").isEmail(),
+        body("password").notEmpty()
+    ],
+    UserController.showLogin
+);
 
-router.post('/auth/inscription', UserController.showRegister, [
-    body("username")
-        .trim()
-        .notEmpty()
-        .isLength({min:3}),
-
-    body("email")
-        .isEmail(),
-    body("password")
-        .notEmpty()
-])
+routerAuth.post('/inscription',
+    [
+        body("username").trim().notEmpty().isLength({ min: 3 }),
+        body("email").isEmail(),
+        body("password").notEmpty()
+    ],
+    UserController.showRegister
+);

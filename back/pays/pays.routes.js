@@ -2,13 +2,13 @@ import express from "express";
 import paysController from "./pays.controller.js";
 import {body} from "express-validator";
 
-const router = express.Router();
+export const routerPays = express.Router();
 
-router.get("/pays", paysController.getAllPays);
+routerPays.get("pays", paysController.getAllPays);
 
-router.get("/pays/:uuid", paysController.getPays);
+routerPays.get("/:uuid", paysController.getPays);
 
-router.post("/pays/ajouter", paysController.createPays, [
+routerPays.post("/ajouter", paysController.createPays, [
     body("name")
         .trim()
         .notEmpty()
@@ -25,9 +25,9 @@ router.post("/pays/ajouter", paysController.createPays, [
     ],
 );
 
-router.delete("/pays/supprimer/:uuid", paysController.deletePays);
+routerPays.delete("/supprimer/:uuid", paysController.deletePays);
 
-router.put("/pays/modifier", paysController.updatePays, [
+routerPays.put("/modifier", paysController.updatePays, [
         body("name")
             .trim()
             .notEmpty()
@@ -43,5 +43,3 @@ router.put("/pays/modifier", paysController.updatePays, [
             .customSanitizer(v => v.toUpperCase())
     ],
 );
-
-export default router;
